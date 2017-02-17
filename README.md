@@ -1,2 +1,2 @@
 # lispy
-Building a LISP in C using @orangeduck's [textbook](buildyourownlisp.com).
+Building a LISP in C using @orangeduck's [textbook](http://buildyourownlisp.com).

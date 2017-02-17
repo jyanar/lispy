@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "mpi.h"
+
 #ifdef _WIN32
   #include "editline_win.h"
 #elif __APPLE__
@@ -20,11 +22,19 @@ int main(int argc, char** argv) {
     char* input = readline("lispy> ");
     add_history(input);
 
-    printf("No, you're a %s\n", input);
+    mpc_result_t r;
+    if (mpc_parse("<stdin>", input, Lispy, &r)) {
+      // Valid input!
+      mpc_ast_print(r.output);
+      mpc_ast_delete(r.output);
+    } else {
+      // Invalid, print error
+      mpc_err_print(r.error);
+      mpc_err_delete(r.error);
+    }
 
     free(input);
   }
-
   return 0;
 }
 
